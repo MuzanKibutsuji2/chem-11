@@ -17,18 +17,19 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+# NOTE: The first deployment needs GitHub Pages to be enabled once by a repository
+# admin in the browser (the workflow token cannot create the Pages site):
+#   Settings -> Pages -> Build and deployment -> Source -> "GitHub Actions"
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Enable GitHub Pages and set source to GitHub Actions
+      - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - run: npm ci
       - run: npm run build
